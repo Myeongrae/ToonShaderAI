@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>ToonShaderAI Demo</title>
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="Shourtcut Icon" href="#">
+        <script src="src/main.js" type="module"></script>
+        <link rel="modulepreload" href="src/preload.js">
+    </head>
+
+    <body>
+        <header>
+            <h2>ToonShaderAI Demo</h2>
+        </header>
+        
+        <section>
+            <div id="container" >
+                <canvas id="glcanvas"></canvas>
+    
+                <div id="toon"></div>
+                
+                <div id="preview">
+                    <h4> Light Preview</h4>
+                </div>
+    
+                <div id="light"></div>
+                
+                <div id="color">
+                    <h4> Light Color</h4>
+                    <div>
+                        <input type ="color" id="light_color" name="light" value="#ffffff"/>
+                        <label for="light">Directional</label>
+                    </div>
+                    
+                    <div>
+                        <input type ="color" id="ambient_color" name="ambient" value="#808080"/>
+                        <label for="ambient">Ambient</label>
+                    </div>
+                </div>
+    
+                <div id="mask">
+                    <h4> Custom Masking</h4>
+                    <div>
+                        <input type="checkbox" id="occlusion" name="occlusion" checked />
+                        <label for="occlusion">Occlusion</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emission" name="emission" checked />
+                        <label for="emission">Emission</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="shininess" name="shininess" checked />
+                        <label for="shininess">Shininess</label>
+                    </div>
+                </div>
+    
+                <div id="target_style">
+                    
+                    <div>
+                        <h4>Style Std</h4>
+                        <div id="style_std" name="style_std"></div>
+                    </div>
+                    
+                    <div>
+                        <h4>Style Mean</h4>
+                        <div id="style_mean" name="style_mean"></div>
+                    </div>
+    
+                </div>
+    
+                <div id="target_image">
+                    <h4> Target Image</h4>
+                    <input type="file" accept="image/*" name="image" id="file" style="display:none;">
+                    <label for="file" style="cursor: pointer;">Upload Image<br>(click me!)</label>
+                    <canvas id="imgCanvas" width="128" height="128"></canvas>
+                </div>
+            </div>
+        </section>
+        
+    </body>
+</html>

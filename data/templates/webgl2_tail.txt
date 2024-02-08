@@ -1,0 +1,86 @@
+
+vec3 leakyReLU(vec3 v) {
+    float x = v.x > 0.0 ? v.x : 0.01*v.x;
+    float y = v.y > 0.0 ? v.y : 0.01*v.y;
+    float z = v.z > 0.0 ? v.z : 0.01*v.z;
+    return vec3(x, y, z);
+}
+
+mat3 leakyReLU(mat3 m) {
+    return mat3(leakyReLU(m[0]), leakyReLU(m[1]), leakyReLU(m[2]));
+}
+
+vec3 sigmoid(vec3 v) {
+    return 1. / (1. + exp(-v));
+}
+
+vec3 toonShaderAI(vec3 light, vec3 normal, vec3 view, 
+					float occlusion, float emission, float shininess, 
+					vec3 albedo, vec3 light_color, vec3 ambient_color,
+                    vec3 style_std, vec3 style_mean) {
+
+										
+	vec3 L = normalize(light);
+	vec3 N = normalize(normal);
+	vec3 V = normalize(view);
+	vec3 R = reflect(L, N);
+	
+	vec3 lgt = vec3(0, dot(L, N), dot(R, V));
+	vec3 mask = vec3(occlusion, emission, shininess);
+	
+     // lighting module
+	vec3 feature = conv_lgt_0_weight_0 * lgt + conv_lgt_0_weight_1 * mask + conv_lgt_0_bias;
+    feature = leakyReLU(feature);
+    feature = feature * style_std + style_mean;
+    
+    vec3 feature_conv = conv_lgt_1_weight * feature + conv_lgt_1_bias;
+    feature_conv = leakyReLU(feature_conv);
+    feature_conv = conv_lgt_2_weight * feature_conv + conv_lgt_2_bias;
+    feature = feature + feature_conv;
+    feature = feature*style_std + style_mean;
+
+    feature = conv_lgt_3_weight * feature + conv_lgt_3_bias;
+    feature = sigmoid(feature);
+	
+	// coloring module
+	mat3 feature_mat = mat3(feature, feature, feature);
+    mat3 color_mat = transpose(mat3(albedo, light_color, ambient_color));
+	
+	color_mat = conv_shad_0_weight_1 * color_mat + mat3(conv_shad_0_bias, conv_shad_0_bias, conv_shad_0_bias);
+    color_mat = conv_shad_0_weight_0 * feature_mat + color_mat; 
+    color_mat = leakyReLU(color_mat);
+    
+    mat3 color_mat_conv = conv_shad_1_weight * color_mat + mat3(conv_shad_1_bias, conv_shad_1_bias, conv_shad_1_bias);
+    color_mat_conv = leakyReLU(color_mat_conv);
+    color_mat_conv = conv_shad_2_weight * color_mat_conv + mat3(conv_shad_2_bias, conv_shad_2_bias, conv_shad_2_bias);
+    color_mat = color_mat + color_mat_conv;
+    
+    vec3 color = conv_shad_3_weight * color_mat + vec3(conv_shad_3_bias, conv_shad_3_bias, conv_shad_3_bias);
+	color = sigmoid(color);
+	
+	return color;
+}
+
+void main() {
+    vec4 albedo = texture(u_albedo, v_uv);
+    float occlusion = texture(u_occlusion, v_uv).r;
+    float emission = texture(u_emission, v_uv).r;
+    float shininess = texture(u_shininess, v_uv).r;
+
+    vec3 color = toonShaderAI(
+		u_lightPos,
+		v_normal,
+		v_viewPos - v_worldPos.xyz,
+		occlusion,
+		emission,
+		shininess,
+		albedo.rgb,
+		u_lightColor,
+		u_ambientColor,
+        u_styleStd,
+        u_styleMean 
+	);
+
+    fragColor = vec4(color, albedo.a);
+}
+`;

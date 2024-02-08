@@ -1,0 +1,10 @@
+.venv/
+.vscode/
+dataset/
+demo/dist/
+demo/node_modules/
+demo/resources/
+helper/
+src/__pycache__/
+training/
+debugging.ipynb

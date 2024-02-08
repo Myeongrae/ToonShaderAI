@@ -1,0 +1,61 @@
+export: model/pretrained.safetensors
+stage1:
+  dataloaders:
+    net:
+      batch_size: 4
+      directory: dataset/gbuffer/
+      name: GBufferDataset
+      random_split: 0.9166666666666666
+  device: cuda
+  epoch: 200
+  networks:
+    net:
+      name: ToonShaderStyle
+      weight_norm: true
+  optimizers:
+    net:
+      lr: 0.001
+      name: RAdam
+      weight_decay: 1.0e-05
+  save_period: 50
+  schedulers:
+    net:
+      gamma: 0.99
+      name: ExponentialLR
+stage2:
+  dataloaders:
+    R:
+      batch_size: 4
+      directory: dataset/style/
+      name: ImageDataset
+      random_split: 0.9166666666666666
+    S:
+      batch_size: 4
+      directory: dataset/gbuffer/
+      name: GBufferDataset
+      random_split: 0.9166666666666666
+  device: cuda
+  epoch: 200
+  networks:
+    FE:
+      name: VGGFeatureExtractor
+    net:
+      name: ToonShaderStyle
+      pretrained:
+        key: net
+        path: null
+      weight_norm: true
+  optimizers:
+    net:
+      lr: 0.0004
+      name: RAdam
+      weight_decay: 1.0e-05
+  pipeline:
+    loss_rgb: 8
+    loss_smooth: 10
+    loss_style: 1
+  save_period: 50
+  schedulers:
+    net:
+      gamma: 0.99999
+      name: ExponentialLR

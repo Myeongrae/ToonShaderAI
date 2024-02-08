@@ -1,0 +1,84 @@
+
+// =====================================================================================================================
+// 	helper functions
+// =====================================================================================================================
+
+float3 leakyReLU(float3 v) 
+{
+	float x = v.x > 0 ? v.x : 0.01*v.x;
+	float y = v.y > 0 ? v.y : 0.01*v.y;
+	float z = v.z > 0 ? v.z : 0.01*v.z;
+	return float3(x, y, z);
+};
+
+float3x3 leakyReLU(float3x3 m) 
+{
+	return float3x3(leakyReLU(m[0]), leakyReLU(m[1]), leakyReLU(m[2]));
+}
+
+float3 sigmoid(float3 v) 
+{
+	return 1.0 / (1.0 + exp(-v));
+}
+
+float3 toonShaderAI(float3 light, float3 normal, float3 view, 
+					float occlusion, float emission, float shininess, 
+					float3 albedo, float3 light_color, float3 ambient_color,
+					float3 style_std, float3 style_mean) {
+
+										
+	float3 L = normalize(light);
+	float3 N = normalize(normal);
+	float3 V = normalize(view);
+	float3 R = reflect(L, N);
+	
+	float3 lgt = float3(0, dot(L, N), dot(R, V));
+	float3 mask = float3(occlusion, emission, shininess);
+	
+	// lighting module
+	float3 feature = leakyReLU(mul(conv_lgt_0_weight_0, lgt) + mul(conv_lgt_0_weight_1, mask) + conv_lgt_0_bias);
+    feature = feature * style_std + style_mean;
+    
+    float3 feature_conv = leakyReLU(mul(conv_lgt_1_weight, feature) + conv_lgt_1_bias);
+    feature = mul(conv_lgt_2_weight, feature_conv) + conv_lgt_2_bias + feature;
+    feature = feature * style_std + style_mean;
+    
+    feature = sigmoid(mul(conv_lgt_3_weight, feature) + conv_lgt_3_bias);
+    
+	// coloring module
+    float3x3 features = transpose(float3x3(feature, feature, feature));
+    float3x3 colors = float3x3(albedo.rgb, light_color, ambient_color);
+	
+	colors = leakyReLU(mul(conv_shad_0_weight_0, features) + mul(conv_shad_0_weight_1, colors) + transpose(float3x3(conv_shad_0_bias, conv_shad_0_bias, conv_shad_0_bias)));
+    float3x3 colors_conv = leakyReLU(mul(conv_shad_1_weight, colors) + transpose(float3x3(conv_shad_1_bias, conv_shad_1_bias, conv_shad_1_bias)));
+    colors = mul(conv_shad_2_weight, colors_conv) + transpose(float3x3(conv_shad_2_bias, conv_shad_2_bias, conv_shad_2_bias)) + colors;
+    float3 color = sigmoid(mul(conv_shad_3_weight, colors) + float3(conv_shad_3_bias, conv_shad_3_bias, conv_shad_3_bias));
+	
+	return color;
+}
+
+// =====================================================================================================================
+// 	main function
+// =====================================================================================================================
+
+float4 main(PSInput pin) : SV_TARGET
+{
+	float4 albedo = texAlbedo.Sample(samp, pin.TexCoord);
+	float3 mask = texMask.Sample(samp, pin.TexCoord).rgb;	
+	
+	float3 color = toonShaderAI(
+		LightPos,
+		pin.Normal,
+		pin.ViewPos - pin.WorldPos,
+		mask.r,
+		mask.g,
+		mask.b,
+		albedo.rgb,
+		LightColor,
+		AmbientColor,
+		target_style_std,
+		target_style_mean
+	);
+	
+	return float4(color, albedo.a);
+}
