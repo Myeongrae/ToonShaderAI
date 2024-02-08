@@ -40,12 +40,13 @@ There are some limitations on The ToonShaderAI.
 ## License
 MIT License
 ## Model Details
+
+![ToonShaderAI model overview image](doc/img/model_overview.png)
+
 <details>
 <summary>only for those interested in it.</summary>
 
 ### model structures
-
-![ToonShaderAI model overview image](doc/img/model_overview.png)
 
 There are two main models this project. The exterior style encoder with pretrained VGG-19 and the ToonShaderAI, which is compatible with conventional pixel shaders. The style encoder attempts to encode VGG-19 features into the style input and light colors for the ToonShaderAI. It is implemented using shallow Multilayer Perceptron(MLP).
 
