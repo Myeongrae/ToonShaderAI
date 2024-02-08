@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>ToonShaderAI Demo</title>
+        <link rel="Shourtcut Icon" href="#">
+        <link rel="modulepreload" href="data:application/javascript;base64,aW1wb3J0ICogYXMgVEhSRUUgZnJvbSAidGhyZWUiOw0KaW1wb3J0ICogYXMgb3J0IGZyb20gIm9ubnhydW50aW1lLXdlYiI7DQppbXBvcnQge0ZCWExvYWRlcn0gZnJvbSAidGhyZWUvZXhhbXBsZXMvanNtL2xvYWRlcnMvRkJYTG9hZGVyLmpzIg0KaW1wb3J0IHtPQkpMb2FkZXJ9IGZyb20gInRocmVlL2V4YW1wbGVzL2pzbS9sb2FkZXJzL09CSkxvYWRlci5qcyINCg0Kd2luZG93LmFzc2V0cyA9IHt9Ow0KDQp3aW5kb3cuc3R5bGUgPSB7DQogICAgbWVhbiA6IFswLjAsIDAuMCwgMC4wXSwNCiAgICBzdGQgOiBbMS4wLCAxLjAsIDEuMF0NCn07DQoNCndpbmRvdy5saWdodCA9IHsNCiAgICBwb3NpdGlvbiA6IFsxLjAsIDAuMCwgMC4wXSwNCiAgICBjb2xvciA6IFsxLjAsIDEuMCwgMS4wXSwNCiAgICBhbWJpZW50IDogWzAuNSwgMC41LCAwLjVdIA0KfTsNCg0KYXN5bmMgZnVuY3Rpb24gbG9hZDNET2JqZWN0KHBhdGgpIHsNCiAgICBsZXQgb2JqTG9hZGVyID0gbmV3IE9CSkxvYWRlcigpOw0KICAgIGlmIChwYXRoLnNsaWNlKC0zKSA9PSAiZmJ4Iikgew0KICAgICAgICBvYmpMb2FkZXIgPSBuZXcgRkJYTG9hZGVyKCk7DQogICAgfSANCg0KICAgIGNvbnN0IG1vZGVsID0gYXdhaXQgb2JqTG9hZGVyLmxvYWRBc3luYyhwYXRoKTsNCiAgICBjb25zdCBhcnJheSA9IHt9DQoNCiAgICBtb2RlbC50cmF2ZXJzZShvID0+IHsNCiAgICAgICAgaWYobyBpbnN0YW5jZW9mIFRIUkVFLk1lc2gpIHsNCiAgICAgICAgICAgIGNvbnNvbGUubG9nKG8pOw0KICAgICAgICAgICAgZm9yIChjb25zdCBba2V5LCB2YWx1ZV0gb2YgT2JqZWN0LmVudHJpZXMoby5nZW9tZXRyeS5hdHRyaWJ1dGVzKSkgew0KICAgICAgICAgICAgICAgIGlmIChrZXkgPT0gInBvc2l0aW9uIiB8fCBrZXkgPT0gIm5vcm1hbCIgfHwga2V5ID09ICJ1diIpIHsNCiAgICAgICAgICAgICAgICAgICAgYXJyYXlba2V5XSA9IHtudW1Db21wb25lbnRzIDogdmFsdWUuaXRlbVNpemUsIGRhdGEgOiB2YWx1ZS5hcnJheX07DQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSkNCiAgICByZXR1cm4gYXJyYXk7ICAgIA0KfTsNCg0KZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGxvYWRBc3NldHMoKSB7DQogICAgYXdhaXQgUHJvbWlzZS5hbGwoWw0KICAgICAgICAoYXN5bmMgKCkgPT4ge3dpbmRvdy5hc3NldHMuc2Vzc2lvbiA9IGF3YWl0IG9ydC5JbmZlcmVuY2VTZXNzaW9uLmNyZWF0ZSgncmVzb3VyY2VzL21vZGVsMzIub25ueCcsIHsgZXhlY3V0aW9uUHJvdmlkZXJzOiBbJ3dlYmdsJ10gfSk7IH0pKCksDQogICAgICAgIChhc3luYyAoKSA9PiB7d2luZG93LmFzc2V0cy5vYmplY3RCdWZmZXIgPSBhd2FpdCBsb2FkM0RPYmplY3QoJ3Jlc291cmNlcy9jaG9jb2J1bm55a2luZy5vYmonKTt9KSgpLA0KICAgICAgICAoYXN5bmMgKCkgPT4ge3dpbmRvdy5hc3NldHMuc3BoZXJlQnVmZmVyID0gYXdhaXQgbG9hZDNET2JqZWN0KCdyZXNvdXJjZXMvc3BoZXJlX3Ntb290aC5vYmonKTt9KSgpLA0KICAgIF0pDQoNCiAgICBjb25zb2xlLmxvZygibG9hZGluZyBhc3NldHMgaXMgZG9uZS4iKQ0KfTsNCg==">
+      <script type="module" crossorigin src="/assets/index-ZgG7jKsq.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-GhIaMOL0.css">
+    </head>
+
+    <body>
+        <header>
+            <h2>ToonShaderAI Demo</h2>
+        </header>
+        
+        <section>
+            <div id="container" >
+                <canvas id="glcanvas"></canvas>
+    
+                <div id="toon"></div>
+                
+                <div id="preview">
+                    <h4> Light Preview</h4>
+                </div>
+    
+                <div id="light"></div>
+                
+                <div id="color">
+                    <h4> Light Color</h4>
+                    <div>
+                        <input type ="color" id="light_color" name="light" value="#ffffff"/>
+                        <label for="light">Directional</label>
+                    </div>
+                    
+                    <div>
+                        <input type ="color" id="ambient_color" name="ambient" value="#808080"/>
+                        <label for="ambient">Ambient</label>
+                    </div>
+                </div>
+    
+                <div id="mask">
+                    <h4> Custom Masking</h4>
+                    <div>
+                        <input type="checkbox" id="occlusion" name="occlusion" checked />
+                        <label for="occlusion">Occlusion</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emission" name="emission" checked />
+                        <label for="emission">Emission</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="shininess" name="shininess" checked />
+                        <label for="shininess">Shininess</label>
+                    </div>
+                </div>
+    
+                <div id="target_style">
+                    
+                    <div>
+                        <h4>Style Std</h4>
+                        <div id="style_std" name="style_std"></div>
+                    </div>
+                    
+                    <div>
+                        <h4>Style Mean</h4>
+                        <div id="style_mean" name="style_mean"></div>
+                    </div>
+    
+                </div>
+    
+                <div id="target_image">
+                    <h4> Target Image</h4>
+                    <input type="file" accept="image/*" name="image" id="file" style="display:none;">
+                    <label for="file" style="cursor: pointer;">Upload Image<br>(click me!)</label>
+                    <canvas id="imgCanvas" width="128" height="128"></canvas>
+                </div>
+            </div>
+        </section>
+        
+    </body>
+</html>
