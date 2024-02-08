@@ -2,7 +2,7 @@
 ## Overview
 ToonShaderAI is a compact neural network designed to apply toon shading to 3D models in the style of a target image. All of its functions can be implemented as a pixel shader in standard rendering pipelines, except encoding the target image in the style input. To incorporate ToonShaderAI into your rendering pipeline, obtain the style input using the exterior style encoder, and then bind it to ToonShaderAI within the pixel shader. For guidance on usage, please refer to my simple demo webpage and example implementations in major shading languages.
 ## Demo
-Check my simple web demo [here](https://myeongrae/github.io/ToonShaderAI).
+Check my simple web demo [here](https://myeongrae.github.io/ToonShaderAI/).
 
 ![Demo webpage preview image.](doc/img/demo_preview.png)
 ## Usage
